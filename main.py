@@ -39,10 +39,15 @@ def validated_entry() -> str:
     assert 1 <= length <= MAX_CHARS, f"entry length {length} out of gate"
     assert text.strip() == text and text.strip(), "no padding, not blank"
     assert "\n" not in text and "\r" not in text, "entry must be one line"
-    # Craft rule from the judge's brief: the roast must clearly target a
+    # Craft rules from the judge's brief: the roast must clearly target a
     # gadget used every day, and the punch must land at the end.
     assert text.startswith("My earbuds"), "must roast a daily gadget"
     assert text.endswith("the entire bus."), "punch must land at the end"
+    # The joke is a two-beat betrayal: the earbuds leave, then they return
+    # at the worst moment. If either beat is edited out, the line is just
+    # a complaint, so both verbs are part of the gate.
+    assert "disconnect" in text, "first beat missing: the drop-out"
+    assert "reconnect" in text, "second beat missing: the return"
     text.encode("utf-8")  # raises if the entry is not encodable as UTF-8
     return text
 
